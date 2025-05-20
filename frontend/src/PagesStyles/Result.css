@@ -1,0 +1,46 @@
+/* Result.css */
+.result-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #007bff;
+  padding: 20px;
+}
+
+.result-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  padding: 30px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.result-heading {
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.result-text {
+  color: #555;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.result-btn {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #003f7f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  width: 100%;
+}

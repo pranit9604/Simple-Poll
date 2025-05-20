@@ -1,0 +1,80 @@
+/* AllResult.css */
+.all-results-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #007bff;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.all-results-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  padding: 32px 24px;
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+.all-results-heading {
+  color: #333;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.all-results-error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.all-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.all-results-table th,
+.all-results-table td {
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.all-results-table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.all-results-table tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.all-results-table tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.all-results-table .top-rank {
+  background-color: #ffeaa7 !important;
+}
+
+.rank-badge {
+  background-color: #fdcb6e;
+  color: #333;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.no-results {
+  color: #555;
+  font-style: italic;
+  text-align: center;
+  margin-top: 20px;
+}
