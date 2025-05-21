@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../ComponentsStyles/RegistrationForm.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../ComponentsStyles/RegistrationForm.css";
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({ name: '', email: '' });
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -13,10 +13,10 @@ const RegistrationForm = () => {
 
   const validate = () => {
     const { name, email } = formData;
-    if (!name.trim()) return 'Name is required';
-    if (!email.trim()) return 'Email is required';
-    if (!/^\S+@\S+\.\S+$/.test(email)) return 'Enter a valid email address';
-    return '';
+    if (!name.trim()) return "Name is required";
+    if (!email.trim()) return "Email is required";
+    if (!/^\S+@\S+\.\S+$/.test(email)) return "Enter a valid email address";
+    return "";
   };
 
   const handleSubmit = (e) => {
@@ -25,13 +25,13 @@ const RegistrationForm = () => {
     if (validationError) {
       setError(validationError);
     } else {
-      setError('');
-      navigate('/quiz', { state: formData });
+      setError("");
+      navigate("/quiz", { state: formData });
     }
   };
 
   const handleViewAllResults = () => {
-    navigate('/all-results');
+    navigate("/all-results");
   };
 
   return (

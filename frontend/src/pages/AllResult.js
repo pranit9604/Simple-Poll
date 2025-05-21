@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { fetchAllResults } from '../services/quizService';
-import '../PagesStyles/AllResult.css';
+import React, { useState, useEffect } from "react";
+import { fetchAllResults } from "../services/quizService";
+import "../PagesStyles/AllResult.css";
 
 const AllResult = () => {
   const [results, setResults] = useState([]);
-  const [error, setError] = useState('');
-  const passMarks  = 5
+  const [error, setError] = useState("");
+
   useEffect(() => {
     const getResults = async () => {
       try {
         const data = await fetchAllResults();
+        console.log("Frontend data received:", data);
         setResults(data);
       } catch (err) {
-        setError('Failed to fetch results. Please try again later.');
+        setError("Failed to fetch results. Please try again later.");
       }
     };
     getResults();
@@ -32,13 +33,14 @@ const AllResult = () => {
                 <th>Email</th>
                 <th>Score</th>
                 <th>Status</th>
+                <th>Submitted At</th> {/* ✅ New Column */}
               </tr>
             </thead>
             <tbody>
               {results.map((result, index) => (
-                <tr key={index} className={index === 0 ? 'top-rank' : ''}>
+                <tr key={index}>
                   <td>
-                    {index === 0 ? (
+                    {result.rank === 1 ? (
                       <span className="rank-badge">⭐ Rank 1</span>
                     ) : (
                       `Rank ${result.rank}`
@@ -48,6 +50,13 @@ const AllResult = () => {
                   <td>{result.email}</td>
                   <td>{result.score}</td>
                   <td>{result.status}</td>
+                  <td>{new Date(result.submittedAt).toLocaleString()}</td>
+
+                  {/* suppose we want only date or time 
+                  
+                     we have .toLocaleDateString() // Just date
+                             .toLocaleTimeString() // Just time
+                  */}
                 </tr>
               ))}
             </tbody>

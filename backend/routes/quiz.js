@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Submission = require('../models/Submission');
+const Submission = require("../models/Submission");
 
 const correctAnswers = {
   1: "Library",
@@ -12,29 +12,38 @@ const correctAnswers = {
   7: "Node Package Manager",
   8: "Hooks",
   9: "Single Page Application",
-  10: "Props"
+  10: "Props",
 };
 
-// POST /submit
-router.post('/submit', async (req, res) => {
+const TOTAL_QUESTIONS = Object.keys(correctAnswers).length;
+const PASS_PERCENTAGE = 50;
+
+// POST
+router.post("/submit", async (req, res) => {
   const { name, email, answers } = req.body;
-  if (!name || !email || !answers || typeof answers !== 'object' || Object.keys(answers).length === 0) {
-    return res.status(400).json({ error: 'Missing or invalid data' });
+
+  if (
+    !name ||
+    !email ||
+    !answers ||
+    typeof answers !== "object" ||
+    Object.keys(answers).length === 0
+  ) {
+    return res.status(400).json({ error: "Missing or invalid data" });
   }
 
+  // Score calculation
   let score = 0;
   Object.entries(answers).forEach(([questionId, userAnswer]) => {
-    if (correctAnswers[questionId]?.toLowerCase() === userAnswer.toLowerCase()) {
+    if (
+      correctAnswers[questionId]?.toLowerCase() === userAnswer.toLowerCase()
+    ) {
       score++;
     }
   });
 
-  let status = 'Fail';
-  if (score > 8) {
-    status = 'Rank 1';
-  } else if (score >= 4) {
-    status = 'Pass';
-  }
+  const percentage = (score / TOTAL_QUESTIONS) * 100;
+  const status = percentage >= PASS_PERCENTAGE ? "Pass" : "Fail";
 
   try {
     await Submission.findOneAndUpdate(
@@ -43,30 +52,54 @@ router.post('/submit', async (req, res) => {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
-    const all = await Submission.find().sort({ score: -1 });
-    const rank = all.findIndex(s => s.email === email) + 1;
+    const allSubmissions = await Submission.find().sort({ score: -1 });
+    const rank = allSubmissions.findIndex((sub) => sub.email === email) + 1;
 
     res.json({ score, rank, status });
   } catch (err) {
-    res.status(500).json({ error: 'Database error' });
+    res.status(500).json({ error: "Database error" });
   }
 });
 
-// GET /all-results
-router.get('/all-results', async (req, res) => {
+// GET /all-results (with standard competition ranking logic)
+router.get("/all-results", async (req, res) => {
   try {
-    const all = await Submission.find().sort({ score: -1 });
-    const results = all.map((s, index) => ({
-      name: s.name,
-      email: s.email,
-      score: s.score,
-      rank: index + 1,
-      status: s.status
-    }));
+    // Sort by score (descending) and submission time (ascending)
+    const all = await Submission.find().sort({ score: -1, submittedAt: 1 });
+
+    let results = [];
+    let currentRank = 1;
+    let prevScore = null;
+    let sameScoreCount = 0;
+
+    for (let i = 0; i < all.length; i++) {
+      const s = all[i];
+
+      if (s.score === prevScore) {
+        // Keep current rank for same score
+        sameScoreCount++;
+      } else {
+        // Update rank to new position
+        currentRank = i + 1;
+        sameScoreCount = 1;
+      }
+
+      results.push({
+        name: s.name,
+        email: s.email,
+        score: s.score,
+        status: s.status,
+        rank: currentRank,
+        submittedAt: s.submittedAt, //  timestamp
+      });
+
+      prevScore = s.score;
+    }
+
     res.json(results);
   } catch (err) {
-    res.status(500).json({ error: 'Database error' });
+    console.error("Error fetching results:", err);
+    res.status(500).json({ error: "Database error" });
   }
 });
-
 module.exports = router;

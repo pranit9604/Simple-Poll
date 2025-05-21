@@ -5,6 +5,10 @@ const submissionSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   score: Number,
   status: String,
+  submittedAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model('Submission', submissionSchema);

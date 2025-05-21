@@ -1,5 +1,5 @@
-import React from 'react';
-import '../ComponentsStyles/ResultTable.css';
+import React from "react";
+import "../ComponentsStyles/ResultTable.css";
 
 const ResultTable = ({ results }) => {
   if (!results || results.length === 0) {
@@ -19,9 +19,9 @@ const ResultTable = ({ results }) => {
       </thead>
       <tbody>
         {results.map((result, index) => (
-          <tr key={index} className={result.status === 'Rank 1' ? 'top-rank' : ''}>
+          <tr key={index} className={index === 0 ? "top-rank" : ""}>
             <td>
-              {result.status === 'Rank 1' ? (
+              {index === 0 ? (
                 <span className="rank-badge">⭐ Rank 1</span>
               ) : (
                 `Rank ${result.rank}`
