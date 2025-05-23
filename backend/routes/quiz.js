@@ -1,26 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const Submission = require("../models/Submission");
+const Question = require("../models/Question");
 
-const correctAnswers = {
-  1: "Library",
-  2: "Libuv",
-  3: "JavaScript XML",
-  4: "Virtual DOM",
-  5: "Component",
-  6: "State",
-  7: "Node Package Manager",
-  8: "Hooks",
-  9: "Single Page Application",
-  10: "Props",
-};
-
-const TOTAL_QUESTIONS = Object.keys(correctAnswers).length;
 const PASS_PERCENTAGE = 50;
 
-// POST
+// POST /api/submit
 router.post("/submit", async (req, res) => {
   const { name, email, answers } = req.body;
+
+  console.log("Received submit payload:", { name, email, answers });
 
   if (
     !name ||
@@ -32,20 +21,40 @@ router.post("/submit", async (req, res) => {
     return res.status(400).json({ error: "Missing or invalid data" });
   }
 
-  // Score calculation
-  let score = 0;
-  Object.entries(answers).forEach(([questionId, userAnswer]) => {
-    if (
-      correctAnswers[questionId]?.toLowerCase() === userAnswer.toLowerCase()
-    ) {
-      score++;
-    }
-  });
-
-  const percentage = (score / TOTAL_QUESTIONS) * 100;
-  const status = percentage >= PASS_PERCENTAGE ? "Pass" : "Fail";
-
   try {
+    // Fetch all questions from DB
+    const questions = await Question.find();
+    const correctAnswersMap = {};
+    questions.forEach((q) => {
+      // Accept both 1-based and 0-based correctAnswer
+      let correctIdx =
+        typeof q.correctAnswer === "number"
+          ? q.correctAnswer >= 1
+            ? q.correctAnswer - 1
+            : q.correctAnswer
+          : 0;
+      correctAnswersMap[q._id.toString()] = q.options[correctIdx];
+    });
+
+    console.log("Correct answers map:", correctAnswersMap);
+
+    const TOTAL_QUESTIONS = questions.length;
+
+    // Score calculation
+    let score = 0;
+    Object.entries(answers).forEach(([questionId, userAnswer]) => {
+      if (
+        correctAnswersMap[questionId] &&
+        correctAnswersMap[questionId].toLowerCase().trim() ===
+          userAnswer.toLowerCase().trim()
+      ) {
+        score++;
+      }
+    });
+
+    const percentage = (score / TOTAL_QUESTIONS) * 100;
+    const status = percentage >= PASS_PERCENTAGE ? "Pass" : "Fail";
+
     await Submission.findOneAndUpdate(
       { email },
       { name, email, score, status },
@@ -57,14 +66,14 @@ router.post("/submit", async (req, res) => {
 
     res.json({ score, rank, status });
   } catch (err) {
-    res.status(500).json({ error: "Database error" });
+    console.error("Submit error:", err);
+    res.status(500).json({ error: "Database error", details: err.message });
   }
 });
 
-// GET /all-results (with standard competition ranking logic)
+// GET /api/all-results
 router.get("/all-results", async (req, res) => {
   try {
-    // Sort by score (descending) and submission time (ascending)
     const all = await Submission.find().sort({ score: -1, submittedAt: 1 });
 
     let results = [];
@@ -76,10 +85,8 @@ router.get("/all-results", async (req, res) => {
       const s = all[i];
 
       if (s.score === prevScore) {
-        // Keep current rank for same score
         sameScoreCount++;
       } else {
-        // Update rank to new position
         currentRank = i + 1;
         sameScoreCount = 1;
       }
@@ -90,7 +97,7 @@ router.get("/all-results", async (req, res) => {
         score: s.score,
         status: s.status,
         rank: currentRank,
-        submittedAt: s.submittedAt, //  timestamp
+        submittedAt: s.submittedAt,
       });
 
       prevScore = s.score;
@@ -102,4 +109,5 @@ router.get("/all-results", async (req, res) => {
     res.status(500).json({ error: "Database error" });
   }
 });
+
 module.exports = router;

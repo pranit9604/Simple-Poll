@@ -64,6 +64,13 @@ const RegistrationForm = () => {
         >
           View All Results
         </button>
+        <button
+          type="button"
+          onClick={() => navigate("/admin-login")}
+          className="admin-login-btn"
+        >
+          Admin Login
+        </button>
         {error && <p className="registration-error">{error}</p>}
       </form>
     </div>

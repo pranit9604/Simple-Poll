@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import '../ComponentsStyles/QuestionList.css';
+import React, { useState } from "react";
+import "../ComponentsStyles/QuestionList.css";
 
 const QuestionList = ({ questions, onSubmit }) => {
   const [answers, setAnswers] = useState({});
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSelect = (questionId, option) => {
     setAnswers({ ...answers, [questionId]: option });
@@ -12,20 +12,23 @@ const QuestionList = ({ questions, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (questions.some((q) => !answers[q.id])) {
-      setError('All questions are mandatory');
+      setError("All questions are mandatory");
     } else {
-      setError('');
+      setError("");
       onSubmit(answers);
     }
   };
 
   return (
     <form className="question-form" onSubmit={handleSubmit}>
-      {questions.map((q) => (
+      {questions.map((q, idx) => (
         <div key={q.id} className="question-block">
-          <p className="question-text">{q.question}</p>
-          {q.options.map((opt) => (
-            <label key={opt} className="option-label">
+          <p className="question-text">
+            <span style={{ fontWeight: "bold" }}>{idx + 1}. </span>
+            {q.question}
+          </p>
+          {q.options.map((opt, oidx) => (
+            <label key={q.id + "-" + oidx} className="option-label">
               <input
                 type="radio"
                 name={`q${q.id}`}
