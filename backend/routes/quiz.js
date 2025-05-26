@@ -71,7 +71,7 @@ router.post("/submit", async (req, res) => {
   }
 });
 
-// GET /api/all-results
+// GET api -all-result
 router.get("/all-results", async (req, res) => {
   try {
     const all = await Submission.find().sort({ score: -1, submittedAt: 1 });

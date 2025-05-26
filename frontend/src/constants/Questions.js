@@ -1,3 +1,8 @@
+
+// In casee if we want to fetch question and answer from local memeory only so
+//we can use this file
+
+
 export const questions = [
   {
     id: 1,

@@ -6,7 +6,7 @@
   background-color: #007bff;
   min-height: 100vh;
   box-sizing: border-box;
-  position: relative; /* Make the wrapper relative */
+  position: relative;
 }
 
 .all-results-card {
@@ -17,7 +17,7 @@
   margin: 0 auto;
   max-width: 800px;
   border: 2px solid #2196f3;
-  position: relative; /* Make the card relative */
+  position: relative;
 }
 
 .all-results-heading {
@@ -39,16 +39,20 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  /* Responsive: allow horizontal scroll on small screens */
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .all-results-table th,
 .all-results-table td {
-  padding: 16px 10px; /* Increased padding for more spacing */
+  padding: 16px 10px;
   text-align: center;
-  border-bottom: 1px solid #ddd; /* Add a subtle border between rows */
-  vertical-align: middle; /* Vertically center the content */
-  padding-top: 20px; /* Add top padding */
-  padding-bottom: 20px; /* Add bottom padding */
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .all-results-table th {
@@ -88,8 +92,8 @@
 
 .home-button {
   position: absolute;
-  top: 20px; /* Adjusted top value */
-  left: 20px; /* Adjusted left value */
+  top: 20px;
+  left: 20px;
   background-color: #28a745;
   border: none;
   color: white;
@@ -109,11 +113,79 @@
 }
 
 .all-results-table td div {
-  display: flex; /* Use flexbox for vertical centering */
-  flex-direction: column; /* Stack date and time vertically */
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  margin: 2px 0; /* Add some vertical spacing */
-  font-size: 14px; /* Adjust font size as needed */
-  height: 100%; /* Make the div take up the full height of the cell */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2px 0;
+  font-size: 14px;
+  height: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .all-results-wrapper {
+    padding: 24px 4px;
+  }
+  .all-results-card {
+    padding: 18px 4px;
+    max-width: 100vw;
+  }
+  .all-results-table th,
+  .all-results-table td {
+    padding: 10px 6px;
+    font-size: 15px;
+  }
+  .all-results-heading {
+    font-size: 22px;
+  }
+  .home-button {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+}
+
+/* Mobile (max-width: 600px, covers 320px) */
+@media (max-width: 600px) {
+  .all-results-card {
+    padding: 8px 0;
+  }
+  .all-results-table th,
+  .all-results-table td {
+    padding: 7px 4px;
+    font-size: 12px;
+  }
+  .all-results-heading {
+    font-size: 15px;
+  }
+  .home-button {
+    font-size: 12px;
+    padding: 6px 8px;
+    top: 8px;
+    left: 8px;
+  }
+  /* Make table scrollable horizontally */
+  .all-results-table {
+    font-size: 11px;
+    min-width: 400px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .all-results-wrapper {
+    max-width: 1200px;
+    padding: 60px 0;
+  }
+  .all-results-card {
+    max-width: 1100px;
+    padding: 40px 32px;
+  }
+  .all-results-heading {
+    font-size: 32px;
+  }
+  .all-results-table th,
+  .all-results-table td {
+    font-size: 18px;
+    padding: 18px 12px;
+  }
 }

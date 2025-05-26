@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../ComponentsStyles/RegistrationForm.css";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 function AdminDashboard() {
   const [questions, setQuestions] = useState([]);
@@ -115,9 +115,9 @@ function AdminDashboard() {
           position: "relative",
         }}
       >
-        {/* Centered form with buttons at top corners */}
+        {/* Centered form for buttons at top corners */}
         <div style={{ position: "relative", width: "100%", maxWidth: 450 }}>
-          {/* Top left button */}
+          {/* Top left btn */}
           <button
             type="button"
             className="start-quiz-btn"
@@ -145,7 +145,7 @@ function AdminDashboard() {
             </span>
             Back to Admin Login
           </button>
-          {/* Top right button */}
+          {/* Top right btn */}
           <button
             type="button"
             className="start-quiz-btn"

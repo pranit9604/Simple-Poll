@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../ComponentsStyles/RegistrationForm.css";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 function AdminLogin() {
   const [name, setName] = useState("");
@@ -18,7 +18,7 @@ function AdminLogin() {
         name,
         email,
       });
-      // Store admin info in localStorage
+      // Store admin informatin in localStorage
       localStorage.setItem("adminName", name);
       localStorage.setItem("adminEmail", email);
       navigate("/admin-dashboard");
