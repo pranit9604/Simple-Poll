@@ -33,10 +33,10 @@ A full-stack quiz/poll application built with **React** (frontend) and **Node.js
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React, Vite, TypeScript, Yup, Date-fns, Lodash.debounce, (optional: MUI)
+- **Frontend:** React, Vite, , Yup, Date-fns, Lodash.debounce.
 - **Backend:** Node.js, Express
 - **Database:** (Specify if used – e.g., MongoDB, SQLite, etc.)
-- **Hosting:** Netlify (Frontend), Render/Heroku (Backend)
+- **Hosting:** Netlify (Frontend), Render (Backend)
 
 ---
 
