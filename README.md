@@ -152,38 +152,7 @@ Initial screen for user registration with buttons to:
 ![2025-05-30](https://github.com/user-attachments/assets/f1edf266-6126-4df5-b62b-6c4174965d37)
 
   
-## ☁️ MongoDB Atlas Integration
-
-The app uses **MongoDB Atlas** (cloud-based database) to store quiz data such as users, questions, submissions, and admin credentials.
-
----
-
-### 🧾 Submissions Collection  
-Stores user scores, pass/fail status, and submission time.
-
-![2025-05-30 (16)](https://github.com/user-attachments/assets/86b96b78-6485-40ae-868e-3a3b89b4e46d)
 
 
----
 
-### 👨‍💼 Admins Collection  
-List of authorized admin users with name and email.
-
-![2025-05-30 (17)](https://github.com/user-attachments/assets/e608ec5a-04d7-4252-b5ce-10d8835699e6)
-
-
----
-
-### ❓ Questions Collection  
-Questions added by admins, including options, correct answer, and admin metadata.
-
-![2025-05-30 (18)](https://github.com/user-attachments/assets/14c05c9e-487e-4921-bef3-d6b2ee458b80)
-
-
----
-
-### 📄 Multiple Submissions Query View  
-MongoDB shows paginated results from multiple users, sorted by latest.
-
-![2025-05-30 (19)](https://github.com/user-attachments/assets/e8b05657-71e9-43cd-9114-5bdfdac87f1a)
 
