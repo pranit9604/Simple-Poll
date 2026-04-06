@@ -8,7 +8,7 @@ const questionSchema = new mongoose.Schema({
     required: true
   },
   correctAnswer: {
-    type: Number, // 1-based index (1, 2, 3, 4)
+    type: Number, 
     required: true,
     min: 1,
     max: 4
