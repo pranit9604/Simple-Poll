@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Admin = require("../models/Admin");
 
-// Admin login or register (no password)
+// Admin login or register 
 router.post("/admin/login", async (req, res) => {
   const { name, email } = req.body;
   if (!name || !email)
